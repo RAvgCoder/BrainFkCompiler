@@ -1,0 +1,3 @@
+[]  Fix underflow with '-'
+[]  Fix infinite print to console when '.' stdout is in loop even when without it it quits normally
+    Case: [>+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++.<]
