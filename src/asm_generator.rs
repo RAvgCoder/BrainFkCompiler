@@ -13,17 +13,17 @@ mod asm_instructions;
 
 /// Represents the context for generating assembly code from Brainfuck expressions.
 pub struct AsmContext<'a> {
-    // Tree containing instructions to be executed
+    /// Tree containing instructions to be executed
     syntax_tree: &'a [Expression],
-    // File to write into
+    /// File to write into
     asm_file: File,
-    // The main function of the program
+    /// The main function of the program
     main_func: LinkedList<String>,
-    // All Loops used in the program
+    /// All Loops used in the program
     loop_func: LinkedList<String>,
-    // Unique id's to be given to the loops
+    /// Unique id's to be given to the loops
     loop_uuid: usize,
-    // Used to check if the program requires dealing the console
+    /// Used to check if the program requires dealing the console
     used_stdin: bool,
     used_stdout: bool,
 }
@@ -76,7 +76,7 @@ impl<'a> AsmContext<'a> {
                      parent_loop_id: usize,
                      loop_depth: usize,
     ) {
-        // Instructions for current level usefull for loops
+        // Instructions for current level useful for loops call evaluations
         let mut instructions: Vec<String> = vec![];
 
         for expr in expression.iter() {
@@ -90,7 +90,7 @@ impl<'a> AsmContext<'a> {
                 }
                 Expression::Operator(_op) => {
                     instructions.push(format!(
-                        "\n\t# Token::{:?} | Count:{}",
+                        "\n# Token::{:?} | Count:{}",
                         _op.type_name, _op.count
                     ));
                     instructions.push(match _op.type_name {

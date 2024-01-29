@@ -36,11 +36,9 @@ fn asm_reset_temp() -> String {
 /// Save [REG_CELL_LEN] & [REG_CELL_PTR]
 fn save_reg() -> String {
     format!(
-        r#"
-    # Save Reg for cell_memory_(len & ptr)
+        r#"# Save Reg for cell_memory_(len & ptr)
     mov     {}, {}
-    mov     {}, {}
-    "#,
+    mov     {}, {}"#,
         REG_CELL_LEN, REG_TEMP_SAVE_LEN,
         REG_CELL_PTR, REG_TEMP_SAVE_PTR
     )
@@ -49,11 +47,9 @@ fn save_reg() -> String {
 /// Restore [REG_CELL_LEN] & [REG_CELL_PTR]
 fn restore_reg() -> String {
     format!(
-        r#"
-    # Restore Reg for cell_(len & ptr)
+        r#"# Restore Reg for cell_(len & ptr)
     mov     {}, {}
-    mov     {}, {}
-    "#,
+    mov     {}, {}"#,
         REG_TEMP_SAVE_LEN, REG_CELL_LEN,
         REG_TEMP_SAVE_PTR, REG_CELL_PTR
     )
@@ -70,8 +66,8 @@ pub fn asm_data_init() -> String {
     format!(
         r#"
 .data
-    {}: .long 26        # Define a variable to store the length of the array
-    {}: .space 26           # Define an array of characters with length 26
+    {}: .long 26             # Define a variable to store the length of the array
+    {}: .space 26                # Define an array of characters with length 26
     "#,
         CELL_MEMORY_LEN, CELL_MEMORY
     )
@@ -85,15 +81,15 @@ pub fn asm_main_init() -> String {
 .text
 .globl _start
 _start:
-    movl    {}, {}             # Load the length of the array into ecx
+    movl    {}, {}         # Load the length of the array into ecx
     xor     {}, {}              # Initialize a counter register to 0
 
 fill_array:
-    movb    $0, {}({})     # Store 0 to the array at index CELL_PTR_REG
-    inc     {}              # Increment the counter
-    cmp     {}, {}          # Compare the counter to the length of the array
-    jl      fill_array       # Jump to fill_array if counter is less than the length
-    xor     {}, {}          # Reset the cell_ptr to 0
+    movb    $0, {}({})         # Store 0 to the array at index CELL_PTR_REG
+    inc     {}                    # Increment the counter
+    cmp     {}, {}              # Compare the counter to the length of the array
+    jl      fill_array              # Jump to fill_array if counter is less than the length
+    xor     {}, {}              # Reset the cell_ptr to 0
 "#,
         CELL_MEMORY_LEN,
         REG_CELL_LEN,
@@ -114,8 +110,8 @@ fill_array:
 pub fn asm_exit() -> String {
     r#"
 EXIT:                               # Exiting the program
-    movl    $1, %eax               # sys_exit syscall number
-    xorl    %ebx, %ebx             # exit status 0
+    movl    $1, %eax                # sys_exit syscall number
+    xorl    %ebx, %ebx              # exit status 0
     int     $0x80                   # syscall
     "#
         .to_string()
@@ -177,11 +173,13 @@ fn asm_sys_call(
         r#"
     # {}
     {}
+
     {}
     movl    ${}, %eax                 # sys_write syscall number
     movl    ${}, %ebx                 # file descriptor for stdout
     movl    ${}, %edx                 # length of the character
     int     $0x80                    # syscall
+
     {}
     "#,
         if is_prompt {
@@ -215,8 +213,8 @@ fn asm_init_ecx_for_sys_call_prompt() -> String {
 fn asm_init_ecx_for_sys_call_index() -> String {
     format!(
         "\
-    {}          # Read Get the address of the Character to Print
-    mov     {}, {}                  # Moves the address for printing",
+    {}        # Read Get the address of the Character to Print
+    mov     {}, {}               # Moves the address for printing",
         asm_get_index_mem_offset(),
         REG_TEMP_NOT_PUBLIC, REG_CELL_LEN
     )
