@@ -6,7 +6,7 @@ use colored::Colorize;
 #[derive(Debug)]
 pub struct Parser {
     /// Lexer instance to tokenize the program
-    lexer: Lexer,
+    tokens: Vec<Token>,
     /// Index to keep track of parsing progress
     parser_index: usize,
     /// Flag indicating whether to optimize the AST
@@ -30,7 +30,7 @@ impl Parser {
     /// A new instance of `Parser`.
     pub fn new(program: String, optimize: bool) -> Self {
         Parser {
-            lexer: Lexer::new(program),
+            tokens: Lexer::new(program).move_tokens(),
             parser_index: 0,
             should_optimize: optimize,
             syntax_tree: None,
@@ -78,8 +78,8 @@ impl Parser {
     fn parse_to_ast(&mut self) -> Vec<Expression> {
         let mut expressions: Vec<Expression> = vec![];
 
-        while self.parser_index < self.lexer.tokens().len() {
-            let token = self.lexer.tokens()[self.parser_index];
+        while self.parser_index < self.tokens.len() {
+            let token = self.tokens[self.parser_index];
             self.parser_index += 1;
 
             expressions.push(match token {

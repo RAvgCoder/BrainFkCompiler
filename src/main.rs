@@ -27,7 +27,7 @@ fn main() {
     } = read_file();
 
     // Init a parser that takes the program and converts it to a token stream
-    let mut parser = Parser::new(content.clone(), should_optimise);
+    let mut parser = Parser::new(content, should_optimise);
 
     // Generates an abstract syntax tree for the program
     parser.generate_syntax_tree();

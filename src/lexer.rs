@@ -1,5 +1,6 @@
-use crate::grammar::Token;
 use colored::Colorize;
+
+use crate::grammar::Token;
 
 /// Struct representing a lexer for a custom language.
 #[derive(Debug)]
@@ -113,14 +114,28 @@ impl Lexer {
         0xA as char
     }
 
-    /// Getter function to retrieve tokens.
+    /// Moves out and retrieves ownership of the vector of tokens from the Lexer instance.
+    ///
+    /// After calling this method, the Lexer instance will no longer contain any tokens.
     ///
     /// # Returns
     ///
-    /// A reference to the vector of tokens.
-    pub fn tokens(&self) -> &Vec<Token> {
-        &self.tokens_
+    /// A vector containing the tokens that were previously stored in the Lexer instance.
+    pub fn move_tokens(&mut self) -> Vec<Token> {
+        std::mem::take(&mut self.tokens_)
     }
+
+    /// Returns an iterator over references to the tokens stored in the Lexer instance.
+    ///
+    /// This method allows iterating over the tokens without consuming the Lexer instance.
+    ///
+    /// # Returns
+    ///
+    /// An iterator yielding references to the tokens stored in the Lexer instance.
+    pub fn tokens_iter(&self) -> impl Iterator<Item=&Token> {
+        self.tokens_.iter()
+    }
+
 
     /// Function to handle and print runtime errors.
     ///
