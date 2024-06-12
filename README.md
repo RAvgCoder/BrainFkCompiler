@@ -1,6 +1,3 @@
-Below is a template for a README.md file for your Brainfuck to Assembly (ASM) code generator project:
-
-
 # Brainfuck to Assembly (ASM) Code Generator
 
 This project provides a tool for converting Brainfuck expressions into equivalent assembly code. Brainfuck is a minimalist programming language with a small set of commands, making it an interesting target for code generation.
@@ -42,20 +39,20 @@ To install the Brainfuck to ASM code generator, follow these steps:
 1. Clone the repository:
 
    ```bash
-   git clone https://github.com/your-username/brainfuck-to-asm.git
+   https://github.com/RAvgCoder/BrainFkCompiler.git
    ```
 
 2. Build the project using Cargo:
 
    ```bash
-   cd brainfuck-to-asm
+   cd BrainFkCompiler
    cargo build --release
    ```
 
 3. Run the executable:
 
    ```bash
-   ./target/release/brainfuck-to-asm <input_file> <output_file>
+   ./target/release/BrainFkCompiler <input_file> <output_file>
    ```
 
 ## Examples
