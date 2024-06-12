@@ -1,6 +1,6 @@
 Below is a template for a README.md file for your Brainfuck to Assembly (ASM) code generator project:
 
-```markdown
+
 # Brainfuck to Assembly (ASM) Code Generator
 
 This project provides a tool for converting Brainfuck expressions into equivalent assembly code. Brainfuck is a minimalist programming language with a small set of commands, making it an interesting target for code generation.
@@ -96,6 +96,3 @@ Contributions to the Brainfuck to ASM code generator project are welcome! Feel f
 ## License
 
 This project is licensed under the [MIT License](LICENSE).
-```
-
-Replace placeholders such as `<input_file>`, `<output_file>`, and `your-username` with appropriate values for your project. Additionally, adjust the project name, description, and other details as needed.
