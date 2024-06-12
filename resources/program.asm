@@ -1,7 +1,7 @@
 
 .data
-    array_len: .long 26             # Define a variable to store the length of the array
-    array: .space 26                # Define an array of characters with length 26
+    array_len: .long 256             # Define a variable to store the length of the array
+    array: .space 256                # Define an array of characters with length 256
     
 .text
 .globl _start
@@ -74,6 +74,7 @@ EXIT:                               # Exiting the program
     int     $0x80                   # syscall
     
 LOOP_L0_C2:
+
 # Token::MoveBack | Count:1
     sub      $1, %edx 
 
@@ -104,6 +105,7 @@ LOOP_L0_C2:
     jmp LOOP_L0_C2_RET
     
 LOOP_L0_C1:
+
 # Token::MoveBack | Count:1
     sub      $1, %edx 
 
