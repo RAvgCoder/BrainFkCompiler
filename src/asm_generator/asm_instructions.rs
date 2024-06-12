@@ -66,8 +66,8 @@ pub fn asm_data_init() -> String {
     format!(
         r#"
 .data
-    {}: .long 26             # Define a variable to store the length of the array
-    {}: .space 26                # Define an array of characters with length 26
+    {}: .long 256             # Define a variable to store the length of the array
+    {}: .space 256                # Define an array of characters with length 256
     "#,
         CELL_MEMORY_LEN, CELL_MEMORY
     )
@@ -91,17 +91,12 @@ fill_array:
     jl      fill_array              # Jump to fill_array if counter is less than the length
     xor     {}, {}              # Reset the cell_ptr to 0
 "#,
-        CELL_MEMORY_LEN,
-        REG_CELL_LEN,
+        CELL_MEMORY_LEN, REG_CELL_LEN,
+        REG_CELL_PTR, REG_CELL_PTR,
+        CELL_MEMORY, REG_CELL_PTR,
         REG_CELL_PTR,
-        REG_CELL_PTR,
-        CELL_MEMORY,
-        REG_CELL_PTR,
-        REG_CELL_PTR,
-        REG_CELL_LEN,
-        REG_CELL_PTR,
-        REG_CELL_PTR,
-        REG_CELL_PTR
+        REG_CELL_LEN, REG_CELL_PTR,
+        REG_CELL_PTR, REG_CELL_PTR
     )
 }
 
@@ -113,8 +108,7 @@ EXIT:                               # Exiting the program
     movl    $1, %eax                # sys_exit syscall number
     xorl    %ebx, %ebx              # exit status 0
     int     $0x80                   # syscall
-    "#
-        .to_string()
+    "#.to_string()
 }
 
 // --------------- [ MUST USE END ] --------------- \\
@@ -224,7 +218,6 @@ fn asm_init_ecx_for_sys_call_index() -> String {
 // -------------- [ I/O END ] -------------- \\
 
 
-
 // ----------------- [ LOOPS ] ----------------- \\
 
 /// Gives the template name of the loops
@@ -242,7 +235,8 @@ fn asm_loop_ret(level: usize, count: usize) -> String {
 /// Eg = 'LOOP2_C2:'
 pub fn asm_loop_name(level: usize, count: usize) -> String {
     format!(r#"
-{}:"#, asm_loop_label(level, count))
+{}:
+"#, asm_loop_label(level, count))
 }
 
 /// Calls a loop and gives a label to jump back to when it's done
@@ -279,8 +273,6 @@ pub fn asm_loop_end(level: usize, count: usize) -> String {
 }
 
 // ----------------- [ LOOPS END ] ----------------- \\
-
-
 
 
 // ----------------- [ CELL_PTR & MEMORY MODIFICATIONS ] ----------------- \\
@@ -364,8 +356,6 @@ fn asm_store_to_index() -> String {
 
 
 // ---------------------- [ FUNCTIONS END  ] ---------------------- \\
-
-
 
 
 // ---------------------- [ Extra ] ---------------------- \\
